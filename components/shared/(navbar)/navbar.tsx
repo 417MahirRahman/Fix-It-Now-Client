@@ -90,7 +90,8 @@ export function Navbar({ user }: NavbarProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuGroup>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>{user.data.profile.name}</DropdownMenuLabel>
+                <DropdownMenuLabel>{user.data.profile.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {userMenuItems.map((item) => (
                   <DropdownMenuItem key={item.href} asChild>

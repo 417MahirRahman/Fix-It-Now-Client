@@ -4,7 +4,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/shared/(navbar)/navbar";
+import { Footer } from "@/components/shared/(footer)/footer";
 import { getMyInfo } from "@/service/getMyInfo";
+
 
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
@@ -39,6 +41,7 @@ export default async function RootLayout({
         <Navbar user={user}/>
         <Toaster/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
