@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useActionState, useEffect } from "react";
-import { loginAction } from "../_actions/authActions";
+import { loginAction } from "../_actions/loginActions";
 import { toast } from "sonner";
 
 const LoginForm = () => {
@@ -21,12 +21,7 @@ const LoginForm = () => {
   return (
     <form action={action} className="space-y-4">
       <Card className="p-5 space-y-4">
-        <Input
-          name="email"
-          type="email"
-          placeholder="Email"
-          required
-        />
+        <Input name="email" type="email" placeholder="Email" required />
         <Input
           name="password"
           type="password"

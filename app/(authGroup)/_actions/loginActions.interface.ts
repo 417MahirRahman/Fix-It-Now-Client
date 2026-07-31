@@ -1,5 +1,5 @@
 export interface LoginState {
-  success: true;
+  success: boolean;
   statusCode: number;
   message: string;
   data: {

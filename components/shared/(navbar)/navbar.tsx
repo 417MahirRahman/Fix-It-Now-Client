@@ -110,9 +110,14 @@ export function Navbar({ user }: NavbarProps) {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link href="/login">
-            <Button className="cursor-pointer">Login</Button>
-          </Link>
+          <div>
+            <Link href="/login">
+              <Button className="cursor-pointer">Login</Button>
+            </Link>
+            <Link href="/register">
+              <Button className="cursor-pointer">Register</Button>
+            </Link>
+          </div>
         )}
       </div>
     </header>

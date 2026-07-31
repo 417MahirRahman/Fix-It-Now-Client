@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { LoginState } from "./authActions.interface";
+import { LoginState } from "./loginActions.interface";
 
 export const loginAction = async (
   prevState: LoginState,
