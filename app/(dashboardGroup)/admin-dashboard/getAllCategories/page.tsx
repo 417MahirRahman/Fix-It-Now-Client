@@ -37,7 +37,7 @@ export default async function AdminCategoriesPage() {
           <p className="text-muted-foreground">Manage service categories.</p>
         </div>
         <Button asChild>
-          <Link href="/admin/categories/new">
+          <Link href="/admin-dashboard/createCategory">
             <Plus className="size-4" /> New Category
           </Link>
         </Button>
