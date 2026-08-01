@@ -30,9 +30,9 @@ import { logout } from "@/service/logout";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Technicians", href: "/technicians" },
-  { label: "Services", href: "/services" },
-  { label: "Categories", href: "/categories" },
+  { label: "Technicians", href: "/allTechnicians" },
+  { label: "Services", href: "/allServices" },
+  { label: "Categories", href: "/allCategories" },
 ];
 
 const userMenuItems = [
