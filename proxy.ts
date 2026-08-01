@@ -6,7 +6,7 @@ import { getNewAccessToken } from "./service/getNewAccessToken";
 import { jwtUtils } from "./utils/jwt";
 
 const AUTH_ROUTES = ["/login", "/register"];
-const PUBLIC_ROUTES = ["/", "/all-technicains", "/all-services", "/categories", "/about"];
+const PUBLIC_ROUTES = ["/", "/allTechnicians", "/allServices", "/allCategories", "/about"];
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

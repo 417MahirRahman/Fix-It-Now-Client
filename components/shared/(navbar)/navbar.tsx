@@ -27,21 +27,29 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/service/logout";
 
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Technicians", href: "/allTechnicians" },
-  { label: "Services", href: "/allServices" },
-  { label: "Categories", href: "/allCategories" },
-];
-
-const userMenuItems = [
-  { label: "My Profile", href: "/myProfile", icon: User },
-  { label: "Dashboard", href: "/customer-dashboard", icon: LayoutDashboard },
-];
-
 export function Navbar({ user }: NavbarProps) {
   const router = useRouter();
+
+  let userRole;
+  if(user.data?.profile?.role === "Admin") {
+    userRole = "Admin";
+  }else if(user.data?.profile?.role === "Technician") {
+    userRole = "Technician";
+  }else{
+    userRole = "Customer";
+  }
+
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "Technicians", href: "/allTechnicians" },
+    { label: "Services", href: "/allServices" },
+    { label: "Categories", href: "/allCategories" },
+  ];
+
+  const userMenuItems = [
+    { label: "My Profile", href: "/myProfile", icon: User },
+    { label: "Dashboard", href: `/` + userRole.toLowerCase() + `-dashboard`, icon: LayoutDashboard },
+  ];
 
   const handleLogout = async () => {
     await logout();

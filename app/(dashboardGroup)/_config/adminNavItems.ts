@@ -2,10 +2,26 @@ import { BarChart3, ClipboardList, FolderKanban, LayoutDashboard, PlusCircle, Us
 import { NavItem } from "./NavItems.interface";
 
 export const adminNavItems: NavItem[] = [
-  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { label: "All Users", href: "/admin/users", icon: Users },
-  { label: "All Bookings", href: "/admin/bookings", icon: ClipboardList },
-  { label: "All Categories", href: "/admin/categories", icon: FolderKanban },
-  { label: "Create Category", href: "/admin/categories/new", icon: PlusCircle },
-  { label: "Statistics", href: "/admin/statistics", icon: BarChart3 },
+  { label: "Dashboard", href: "/admin-dashboard", icon: LayoutDashboard },
+  { label: "All Users", href: "/admin-dashboard/getAllUsers", icon: Users },
+  {
+    label: "All Bookings",
+    href: "/admin-dashboard/getAllBookings",
+    icon: ClipboardList,
+  },
+  {
+    label: "All Categories",
+    href: "/admin-dashboard/getAllCategories",
+    icon: FolderKanban,
+  },
+  {
+    label: "Create Category",
+    href: "/admin-dashboard/createCategory",
+    icon: PlusCircle,
+  },
+  {
+    label: "Statistics",
+    href: "/admin-dashboard/admin-statistics",
+    icon: BarChart3,
+  },
 ];
