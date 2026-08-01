@@ -36,7 +36,7 @@ const navLinks = [
 ];
 
 const userMenuItems = [
-  { label: "My Profile", href: "/profile", icon: User },
+  { label: "My Profile", href: "/myProfile", icon: User },
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
 ];
 

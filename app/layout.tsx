@@ -9,6 +9,8 @@ import { getMyInfo } from "@/service/getMyInfo";
 
 
 
+
+
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
@@ -35,12 +37,19 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        inter.variable,
+      )}
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar user={user}/>
-        <Toaster/>
-        {children}
+      <body className="min-h-dvh flex flex-col">
+        <Navbar user={user} />
+        <Toaster />
+        <main className="grow">{children}</main>
         <Footer/>
       </body>
     </html>
