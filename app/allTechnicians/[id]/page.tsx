@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { BookServiceButton } from "../_components/book-service-button";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -107,6 +108,12 @@ export default async function TechnicianDetailPage({ params }: PageProps) {
                   {service.rating}
                 </span>
               </CardContent>
+              <div>
+                <BookServiceButton
+                  serviceId={service.id}
+                  serviceName={service.service_name}
+                />
+              </div>
             </Card>
           ))}
         </div>
