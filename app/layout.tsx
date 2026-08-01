@@ -6,10 +6,7 @@ import { Toaster } from "sonner";
 import { Navbar } from "@/components/shared/(navbar)/navbar";
 import { Footer } from "@/components/shared/(footer)/footer";
 import { getMyInfo } from "@/service/getMyInfo";
-
-
-
-
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -49,8 +46,10 @@ export default async function RootLayout({
       <body className="min-h-dvh flex flex-col">
         <Navbar user={user} />
         <Toaster />
-        <main className="grow">{children}</main>
-        <Footer/>
+        <TooltipProvider>
+          <main className="grow">{children}</main>
+        </TooltipProvider>
+        <Footer />
       </body>
     </html>
   );
