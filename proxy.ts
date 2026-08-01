@@ -1,12 +1,9 @@
-// import { cookies } from 'next/headers';
 import { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getNewAccessToken } from "./service/getNewAccessToken";
 import { jwtUtils } from "./utils/jwt";
-
-
 
 const AUTH_ROUTES = ["/login", "/register"];
 const PUBLIC_ROUTES = ["/", "/all-technicains", "/all-services", "/categories", "/about"];
