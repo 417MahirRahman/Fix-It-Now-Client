@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use server';
 
-import { FilterBar } from "./_components/filter-bar";
+import { FilterBar } from "../../components/shared/filter-bar";
 import { TechnicianCard } from "./_components/technician-card";
 
 interface PageProps {
@@ -35,7 +34,6 @@ export default async function TechniciansPage({ searchParams }: PageProps) {
         <p className="text-muted-foreground">No technicians found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          
           {technicians.map((tech: any) => (
             <TechnicianCard
               key={tech.id}
