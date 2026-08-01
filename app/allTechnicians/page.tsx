@@ -37,18 +37,18 @@ export default async function TechniciansPage({ searchParams }: PageProps) {
           {technicians.map((tech: any) => (
             <TechnicianCard
               key={tech.id}
-              id={tech.id}
-              name={tech.user.name}
-              address={tech.user.address}
-              experienceYears={tech.experienceYears}
-              avgRating={tech.avgRating}
-              categories={
-                [
+              technician={{
+                id: tech.id,
+                name: tech.user.name,
+                address: tech.user.address,
+                experienceYears: tech.experienceYears,
+                avgRating: tech.avgRating,
+                categories: [
                   ...new Set(
                     tech.services.map((s: any) => s.category.category_name),
                   ),
-                ] as string[]
-              }
+                ] as string[],
+              }}
             />
           ))}
         </div>

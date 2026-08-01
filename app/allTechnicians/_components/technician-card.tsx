@@ -3,41 +3,30 @@ import { Star, MapPin, Briefcase } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { TechnicianCardProps } from "./technicians.interface";
 
-interface TechnicianCardProps {
-  id: string;
-  name: string;
-  address?: string;
-  experienceYears: number;
-  avgRating: number;
-  categories: string[];
-}
+export function TechnicianCard({ technician }: TechnicianCardProps) {
+  const { id, name, address, experienceYears, avgRating, categories } =
+    technician;
 
-export function TechnicianCard({
-  id,
-  name,
-  address,
-  experienceYears,
-  avgRating,
-  categories,
-}: TechnicianCardProps) {
   return (
-    <Link href={`/technicians/${id}`}>
-      <Card className="h-full transition-shadow hover:shadow-md">
-        <CardHeader className="flex flex-row items-center gap-3 pb-2">
-          <Avatar className="size-12">
-            <AvatarImage src="" alt={name} />
-            <AvatarFallback>{name.slice(0, 2).toUpperCase()}</AvatarFallback>
-          </Avatar>
-          <div>
-            <h3 className="font-semibold">{name}</h3>
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <Star className="size-3.5 fill-yellow-400 text-yellow-400" />
-              {avgRating}
-            </div>
+    <Card className="h-full flex flex-col transition-shadow hover:shadow-md">
+      <CardHeader className="flex flex-row items-center gap-3 pb-2">
+        <Avatar className="size-12">
+          <AvatarImage src="" alt={name} />
+          <AvatarFallback>{name.slice(0, 2).toUpperCase()}</AvatarFallback>
+        </Avatar>
+        <div>
+          <h3 className="font-semibold">{name}</h3>
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <Star className="size-3.5 fill-yellow-400 text-yellow-400" />
+            {avgRating}
           </div>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm text-muted-foreground">
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-col flex-1 space-y-3 text-sm text-muted-foreground">
+        <div className="space-y-2">
           {address && (
             <p className="flex items-center gap-1.5">
               <MapPin className="size-4" /> {address}
@@ -53,8 +42,12 @@ export function TechnicianCard({
               </Badge>
             ))}
           </div>
-        </CardContent>
-      </Card>
-    </Link>
+        </div>
+
+        <Button asChild className="w-full mt-auto">
+          <Link href={`/allTechnicians/${id}`}>View Details</Link>
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
