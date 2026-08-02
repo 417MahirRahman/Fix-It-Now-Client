@@ -10,7 +10,7 @@ export const customerNavItems: NavItem[] = [
   },
   {
     label: "Payment History",
-    href: "/customer-dashboard/payments",
+    href: "/customer-dashboard/paymentHistory",
     icon: CreditCard,
   },
 ];
