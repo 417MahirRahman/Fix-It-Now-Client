@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { createServiceAction } from "../_actions/newServiceActions";
+import { createServiceAction } from "../_actions/createServiceActions";
 import { ServiceState } from "../_actions/technician.interface";
 
 const initialState: ServiceState = { success: false, message: "" };
