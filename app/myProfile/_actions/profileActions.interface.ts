@@ -16,3 +16,8 @@ export interface ProfileState {
     updatedProfile: Partial<UserProfile>;
   };
 }
+
+export interface TechnicianProfileState {
+  success: boolean;
+  message: string;
+}

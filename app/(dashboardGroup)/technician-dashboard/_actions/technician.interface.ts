@@ -7,3 +7,8 @@ export interface AvailabilityState {
   success: boolean;
   message: string;
 }
+
+export interface BookingStatusState {
+  success: boolean;
+  message: string;
+}

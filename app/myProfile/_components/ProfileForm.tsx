@@ -7,7 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { updateProfileAction } from "../_actions/profileActions";
-import { ProfileState, UserProfile } from "../_actions/profileActions.interface";
+import {
+  ProfileState,
+  UserProfile,
+} from "../_actions/profileActions.interface";
+import { EditTechnicianProfileButton } from "./update-technician-profile-button";
 
 const initialState: ProfileState = {
   success: false,
@@ -47,7 +51,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
         </p>
       </CardHeader>
 
-      <CardContent className="p-0">
+      <CardContent className="p-0 space-y-6">
         <form action={formAction} className="space-y-5 sm:space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -85,36 +89,30 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               </p>
             </div>
           </div>
-
           {isTechnician && (
             <>
               <div className="space-y-2">
-                <Label htmlFor="bio" className="text-sm font-medium">
-                  Bio
-                </Label>
+                <Label className="text-sm font-medium">Bio</Label>
                 <textarea
-                  id="bio"
-                  name="bio"
-                  defaultValue={user.bio ?? ""}
-                  placeholder="Tell customers about yourself and your skills..."
+                  value={user.bio ?? "No bio added yet."}
+                  readOnly
+                  disabled
                   rows={4}
-                  className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base min-h-[100px] resize-y ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-full rounded-md border border-input bg-muted px-3 py-2 text-base min-h-[100px] resize-none cursor-not-allowed text-muted-foreground"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="experienceYears" className="text-sm font-medium">
+                  <Label className="text-sm font-medium">
                     Experience (Years)
                   </Label>
                   <Input
-                    id="experienceYears"
-                    name="experienceYears"
-                    type="number"
-                    min={0}
-                    max={60}
-                    defaultValue={user.experienceYears ?? 0}
-                    className="h-11"
+                    type="text"
+                    value={user.experienceYears ?? 0}
+                    readOnly
+                    disabled
+                    className="h-11 bg-muted cursor-not-allowed"
                   />
                 </div>
 
@@ -155,6 +153,12 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             </Button>
           </div>
         </form>
+        {isTechnician && (
+          <EditTechnicianProfileButton
+            currentBio={user.bio}
+            currentExperience={user.experienceYears}
+          />
+        )}
       </CardContent>
     </Card>
   );
