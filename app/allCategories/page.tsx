@@ -16,9 +16,6 @@ export default async function CategoriesPage() {
       <h1 className="text-2xl sm:text-3xl font-bold mb-2">
         Service Categories
       </h1>
-      <p className="text-muted-foreground mb-6">
-        Pick a category to see everything on offer.
-      </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {categories.map((cat: any) => (

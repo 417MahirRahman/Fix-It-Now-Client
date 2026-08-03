@@ -4,14 +4,13 @@ import { FilterBar } from "../../components/shared/filter-bar";
 import { ServiceCard } from "./_components/service-card";
 
 interface PageProps {
-  searchParams: Promise<{ type?: string; rating?: string }>;
+  searchParams: Promise<{ type?: string }>;
 }
 
 export default async function ServicesPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const query = new URLSearchParams();
   if (params.type) query.set("type", params.type);
-  if (params.rating) query.set("rating", params.rating);
 
   const res = await fetch(
     `${process.env.BACKEND_API_URL}/api/services?${query.toString()}`,
@@ -38,9 +37,9 @@ export default async function ServicesPage({ searchParams }: PageProps) {
               key={service.id}
               service_name={service.service_name}
               price={service.price}
-              rating={service.rating}
               categoryName={service.category.category_name}
               technicianName={service.technician.user.name}
+              technicianId={service.technician.id}
             />
           ))}
         </div>
