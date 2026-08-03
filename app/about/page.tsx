@@ -3,9 +3,9 @@ import {
   Wrench,
   ShieldCheck,
   Handshake,
-  Search,
-  CalendarCheck,
   CheckCircle2,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,111 +32,93 @@ const values = [
   },
 ];
 
-const steps = [
-  {
-    icon: Search,
-    title: "Find the right pro",
-    description:
-      "Browse by category, location, and rating until you find a good fit.",
-  },
-  {
-    icon: CalendarCheck,
-    title: "Book a time that works",
-    description:
-      "Pick a slot, add any notes about the job, and send the request.",
-  },
-  {
-    icon: Wrench,
-    title: "Get it fixed",
-    description:
-      "Your technician confirms, does the work, and you pay once it's done.",
-  },
-];
-
 const categories = ["Plumbing", "Electrical", "Cleaning", "Painting"];
 
 export default function AboutPage() {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden">
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 text-center">
-        <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-          <Wrench className="size-7" />
+      <section className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 text-center">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance">
+
+        <div className="mx-auto mb-8 flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/20">
+          <Wrench className="size-8" />
+        </div>
+
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance leading-tight">
           Every home has something
           <br className="hidden sm:block" /> that needs fixing.
         </h1>
-        <p className="mt-5 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground text-pretty">
+
+        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground text-pretty leading-relaxed">
           FixItNow connects people who need work done with the technicians who
           can actually do it — plumbers, electricians, cleaners, and painters,
           all in one place.
         </p>
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Button asChild size="lg" className="w-full sm:w-auto">
-            <Link href="/technicians">Find a Technician</Link>
+
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button
+            asChild
+            size="lg"
+            className="w-full sm:w-auto h-12 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+          >
+            <Link href="/technicians" className="flex items-center gap-2">
+              Find a Technician
+              <ArrowRight className="size-4" />
+            </Link>
           </Button>
           <Button
             asChild
             size="lg"
             variant="outline"
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto h-12 text-base font-medium"
           >
             <Link href="/register">Join as a Technician</Link>
           </Button>
+        </div>
+
+        {/* Trust indicators */}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <div className="flex size-8 items-center justify-center rounded-full bg-primary/10">
+              <CheckCircle2 className="size-4 text-primary" />
+            </div>
+            <span>Verified Technicians</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex size-8 items-center justify-center rounded-full bg-primary/10">
+              <ShieldCheck className="size-4 text-primary" />
+            </div>
+            <span>Secure Bookings</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex size-8 items-center justify-center rounded-full bg-primary/10">
+              <Sparkles className="size-4 text-primary" />
+            </div>
+            <span>Quality Guaranteed</span>
+          </div>
         </div>
       </section>
 
       <Separator />
 
       {/* Categories strip */}
-      <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-        <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-          Built around the trades people rely on most
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {categories.map((cat) => (
-            <span
-              key={cat}
-              className="rounded-full border px-4 py-1.5 text-sm font-medium text-muted-foreground"
-            >
-              {cat}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      <Separator />
-
-      {/* How it works — the signature element: a job-ticket style sequence */}
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            How a job gets done
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            Three steps, start to finish — the same for a leaky faucet or a full
-            repaint.
+      <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="text-center mb-6">
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-balance leading-tight">
+            Built around the trades people rely on most
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0 relative">
-          {steps.map((step, i) => (
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {categories.map((cat) => (
             <div
-              key={step.title}
-              className="relative flex flex-col items-center text-center px-6 py-8"
+              key={cat}
+              className="group relative rounded-full border border-border/50 bg-background px-5 py-2 text-sm font-medium text-muted-foreground transition-all hover:border-primary/50 hover:text-primary hover:shadow-md hover:-translate-y-0.5"
             >
-              {/* perforated connector between steps, desktop only */}
-              {i > 0 && (
-                <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-px h-24 border-l border-dashed border-border" />
-              )}
-              <div className="flex size-12 items-center justify-center rounded-full bg-muted text-foreground mb-4">
-                <step.icon className="size-5" />
-              </div>
-              <h3 className="font-semibold mb-1.5">{step.title}</h3>
-              <p className="text-sm text-muted-foreground max-w-[220px]">
-                {step.description}
-              </p>
+              {cat}
             </div>
           ))}
         </div>
@@ -146,23 +128,39 @@ export default function AboutPage() {
 
       {/* Values */}
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
+            <ShieldCheck className="size-4" />
+            Our Promise
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
             What we won&apos;t compromise on
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {values.map((value) => (
-            <Card key={value.title} className="border-border">
-              <CardContent className="p-6 space-y-3">
-                <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <value.icon className="size-5" />
+            <Card
+              key={value.title}
+              className="group relative h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-border/50"
+            >
+              {/* Top accent bar */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/60 via-primary to-primary/60 opacity-60 group-hover:opacity-100 transition-opacity" />
+
+              <CardContent className="flex flex-col flex-1 p-6 space-y-4">
+                <div className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary/15 transition-colors">
+                  <value.icon className="size-6" />
                 </div>
-                <h3 className="font-semibold">{value.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {value.description}
-                </p>
+                <div className="flex-1 space-y-2">
+                  <h3 className="font-semibold text-lg">{value.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {value.description}
+                  </p>
+                </div>
               </CardContent>
+
+              {/* Ring overlay for depth */}
+              <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/5 group-hover:ring-primary/20 transition-all pointer-events-none" />
             </Card>
           ))}
         </div>
@@ -171,15 +169,32 @@ export default function AboutPage() {
       <Separator />
 
       {/* Closing CTA */}
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+      <section className="relative mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8 text-center">
+        {/* Decorative background */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6">
+          <Wrench className="size-4" />
+          Ready to get started?
+        </div>
+
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
           Something needs fixing today?
         </h2>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-muted-foreground text-lg mb-10 max-w-xl mx-auto">
           Browse verified technicians near you and get it booked in minutes.
         </p>
-        <Button asChild size="lg">
-          <Link href="/technicians">Get Started</Link>
+        <Button
+          asChild
+          size="lg"
+          className="h-12 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+        >
+          <Link href="/technicians" className="flex items-center gap-2">
+            Get Started
+            <ArrowRight className="size-4" />
+          </Link>
         </Button>
       </section>
     </div>

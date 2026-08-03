@@ -12,9 +12,6 @@ export interface UserProfile {
 export interface ProfileState {
   success: boolean;
   message: string;
-  data?: {
-    updatedProfile: Partial<UserProfile>;
-  };
 }
 
 export interface TechnicianProfileState {

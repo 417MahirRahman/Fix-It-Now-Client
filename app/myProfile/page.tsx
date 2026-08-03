@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { UserProfile } from "./_actions/profileActions.interface";
 import ProfileForm from "./_components/ProfileForm";
 
-
 export default async function ProfilePage() {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;

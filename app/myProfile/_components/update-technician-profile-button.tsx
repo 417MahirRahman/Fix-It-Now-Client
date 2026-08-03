@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -27,20 +28,24 @@ export function EditTechnicianProfileButton({
   currentExperience,
 }: EditTechnicianProfileButtonProps) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
   const [state, formAction, pending] = useActionState(
-    updateTechnicianProfileAction,
+    async (prevState: TechnicianProfileState, formData: FormData) => {
+      const result = await updateTechnicianProfileAction(prevState, formData);
+
+      if (result.success) {
+        toast.success("Technician profile updated!");
+        setOpen(false);
+        router.refresh();
+      } else {
+        toast.error(result.message);
+      }
+
+      return result;
+    },
     initialState,
   );
-
-  useEffect(() => {
-    if (!state.message) return;
-
-    if (state.success) {
-      toast.success("Technician profile updated!");
-    } else {
-      toast.error(state.message);
-    }
-  }, [state]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -79,6 +84,10 @@ export function EditTechnicianProfileButton({
               className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
             />
           </div>
+
+          {!state.success && state.message && (
+            <p className="text-sm text-destructive">{state.message}</p>
+          )}
 
           <DialogFooter>
             <Button type="submit" className="w-full" disabled={pending}>

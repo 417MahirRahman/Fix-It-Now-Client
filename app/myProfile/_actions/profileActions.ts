@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { ProfileState } from "./profileActions.interface";
 
 export const updateProfileAction = async (
@@ -16,10 +17,8 @@ export const updateProfileAction = async (
 
   const payload = {
     name: formData.get("name"),
-    bio: formData.get("bio") || undefined,
-    experienceYears: formData.get("experienceYears")
-      ? Number(formData.get("experienceYears"))
-      : undefined,
+    phone: formData.get("phone"),
+    address: formData.get("address"),
   };
 
   try {
@@ -36,11 +35,12 @@ export const updateProfileAction = async (
     );
 
     const result = await res.json();
+    if (result.success) revalidatePath("/profile");
     return result;
-  } catch (error) {
+  } catch {
     return {
       success: false,
-      message: `Something went wrong. Please try again. Error: ${error}`,
+      message: "Something went wrong. Please try again.",
     };
   }
 };

@@ -141,9 +141,6 @@ export function Navbar({ user }: NavbarProps) {
                       .toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden lg:inline-block text-base font-medium text-foreground">
-                  {user.data.profile.name.split(" ")[0]}
-                </span>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
