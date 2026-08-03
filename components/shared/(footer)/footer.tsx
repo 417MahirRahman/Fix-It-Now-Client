@@ -12,23 +12,22 @@ import {
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Technicians", href: "/technicians" },
-  { label: "Services", href: "/services" },
-  { label: "Categories", href: "/categories" },
+  { label: "Technicians", href: "/allTechnicians" },
+  { label: "Services", href: "/allServices" },
+  { label: "Categories", href: "/allCategories" },
 ];
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
   { label: "Terms of Service", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy" },
 ];
 
 const socialLinks = [
-  { label: "Facebook", href: "https://facebook.com", icon: FacebookIcon },
-  { label: "X", href: "https://x.com", icon: XIcon },
-  { label: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
+  { label: "Facebook", href: "#", icon: FacebookIcon },
+  { label: "X", href: "#", icon: XIcon },
+  { label: "Instagram", href: "#", icon: InstagramIcon },
+  { label: "LinkedIn", href: "#", icon: LinkedinIcon },
 ];
 
 const contactInfo = [
@@ -37,8 +36,8 @@ const contactInfo = [
     href: "mailto:support@fixitnow.com",
     icon: Mail,
   },
-  { label: "(555) 123-4567", href: "tel:+15551234567", icon: Phone },
-  { label: "123 Service St, San Francisco, CA", href: null, icon: MapPin },
+  { label: "017-123-4567", href: "tel:+017-123-4567", icon: Phone },
+  { label: "Rampura, Dhaka", href: null, icon: MapPin },
 ];
 
 export function Footer() {
