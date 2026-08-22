@@ -1,7 +1,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
 import { BookingStatusState } from "./technician.interface";
 
 export const updateBookingStatusAction = async (

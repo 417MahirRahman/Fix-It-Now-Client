@@ -5,8 +5,12 @@ export interface UserProfile {
   role: "Customer" | "Technician" | "Admin";
   phone?: string;
   address?: string;
-  bio?: string | null;
-  experienceYears?: number | null;
+  technicianProfile?: {
+    bio: string | null;
+    experienceYears: number;
+    services: unknown[];
+    availability: unknown[];
+  } | null;
 }
 
 export interface ProfileState {

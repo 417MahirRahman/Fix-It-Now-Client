@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useActionState } from "react";
@@ -27,18 +28,18 @@ interface ProfileFormProps {
 export default function ProfileForm({ user }: ProfileFormProps) {
   const isTechnician = user.role === "Technician";
   const router = useRouter();
+  console.log("Profile update result:", user);
 
   const [state, formAction, pending] = useActionState(
     async (prevState: ProfileState, formData: FormData) => {
       const result = await updateProfileAction(prevState, formData);
-
+      
       if (result.success) {
         toast.success(result.message || "Profile updated!");
         router.refresh();
       } else {
         toast.error(result.message);
       }
-
       return result;
     },
     initialState,
@@ -145,11 +146,11 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Bio</Label>
                 <textarea
-                  value={user.bio ?? "No bio added yet."}
+                  value={user.technicianProfile?.bio ?? "No bio added yet."}
                   readOnly
                   disabled
                   rows={4}
-                  className="flex w-full rounded-md border border-input bg-muted px-3 py-2 text-base min-h-[100px] resize-none cursor-not-allowed text-muted-foreground"
+                  className="flex w-full rounded-md border border-input bg-muted px-3 py-2 text-base min-h-[100px] resize-none text-muted-foreground"
                 />
               </div>
 
@@ -159,10 +160,10 @@ export default function ProfileForm({ user }: ProfileFormProps) {
                 </Label>
                 <Input
                   type="text"
-                  value={user.experienceYears ?? 0}
+                  value={user.technicianProfile?.experienceYears ?? 0}
                   readOnly
                   disabled
-                  className="h-11 bg-muted cursor-not-allowed"
+                  className="h-11 bg-muted"
                 />
               </div>
             </>
@@ -181,8 +182,8 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
         {isTechnician && (
           <EditTechnicianProfileButton
-            currentBio={user.bio}
-            currentExperience={user.experienceYears}
+            currentBio={user.technicianProfile?.bio}
+            currentExperience={user.technicianProfile?.experienceYears}
           />
         )}
       </CardContent>
