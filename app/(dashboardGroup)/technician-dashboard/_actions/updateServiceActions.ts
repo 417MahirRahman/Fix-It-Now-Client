@@ -21,7 +21,7 @@ export const updateServiceAction = async (
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/technician/services/${serviceId}`,
+      `${process.env.BACKEND_API_URL}/api/services/${serviceId}`,
       {
         method: "PUT",
         headers: {
@@ -32,7 +32,36 @@ export const updateServiceAction = async (
       },
     );
     const result = await res.json();
-    if (result.success) revalidatePath("/technician-dashboard/services");
+    return result;
+  } catch {
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
+  }
+};
+
+export const deleteServiceAction = async (
+  serviceId: string,
+): Promise<ServiceState> => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  if (!accessToken) {
+    return { success: false, message: "You are not logged in." };
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_API_URL}/api/technician/services/${serviceId}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
+
+    const result = await res.json();
+    if (result.success) revalidatePath("/technician-dashboard/myServices");
     return result;
   } catch {
     return {

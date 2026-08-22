@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
@@ -45,6 +46,7 @@ export function EditAvailabilityDialog({ slots }: EditAvailabilityDialogProps) {
     if (!state.message) return;
     if (state.success) {
       toast.success("Availability updated!");
+      setOpen(false);
     } else {
       toast.error(state.message);
     }

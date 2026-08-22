@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ClipboardList, CreditCard, Wrench, Star, Plus } from "lucide-react";
+import { ClipboardList, CreditCard, Wrench, Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/table";
 import { StatCard } from "../_components/stat-card";
 
-const bookingStatusVariant: Record<string, any> = {
+const bookingStatusVariant : any = {
   Requested: "outline",
   Accepted: "secondary",
   Declined: "destructive",
@@ -24,11 +24,20 @@ const bookingStatusVariant: Record<string, any> = {
   Completed: "default",
   Cancelled: "destructive",
 };
-const paymentStatusVariant: Record<string, any> = {
+const paymentStatusVariant: any = {
   Pending: "outline",
-  Completed: "default",
+  Paid: "default",
   Failed: "destructive",
 };
+
+async function safeJson(res: Response) {
+  if (!res.ok) return { data: null };
+  try {
+    return await res.json();
+  } catch {
+    return { data: null };
+  }
+}
 
 export default async function TechnicianDashboardPage() {
   const cookieStore = await cookies();
@@ -52,16 +61,16 @@ export default async function TechnicianDashboardPage() {
     }),
   ]);
 
-  const bookings = (await bookingsRes.json()).data ?? [];
-  const payments = (await paymentsRes.json()).data ?? [];
-  const profile = (await meRes.json()).data?.profile;
+  const bookings = (await safeJson(bookingsRes)).data ?? [];
+  const payments = (await safeJson(paymentsRes)).data ?? [];
+  const profile = (await safeJson(meRes)).data?.profile;
   const services = profile?.technicianProfile?.services ?? [];
 
   const pendingRequests = bookings.filter(
     (b: any) => b.status === "Requested",
   ).length;
   const totalEarnings = payments
-    .filter((p: any) => p.status === "Completed")
+    .filter((p: any) => p.status === "Paid")
     .reduce((sum: number, p: any) => sum + Number(p.amount), 0);
 
   const recentBookings = bookings.slice(0, 6);
@@ -84,7 +93,6 @@ export default async function TechnicianDashboardPage() {
         </Button>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           icon={ClipboardList}
@@ -108,7 +116,6 @@ export default async function TechnicianDashboardPage() {
         />
       </div>
 
-      {/* Recent Bookings */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Recent Booking Requests</h2>
@@ -149,7 +156,6 @@ export default async function TechnicianDashboardPage() {
         )}
       </section>
 
-      {/* My Services preview */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">My Services</h2>
@@ -174,10 +180,6 @@ export default async function TechnicianDashboardPage() {
                     <span className="font-semibold">
                       ${Number(service.price).toFixed(2)}
                     </span>
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Star className="size-3 fill-yellow-400 text-yellow-400" />
-                      {service.rating.toFixed(1)}
-                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -186,7 +188,6 @@ export default async function TechnicianDashboardPage() {
         )}
       </section>
 
-      {/* Recent Payments */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Recent Transactions</h2>

@@ -11,12 +11,9 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-const statusVariant: Record<
-  string,
-  "default" | "secondary" | "destructive" | "outline"
-> = {
+const statusVariant: any = {
   Pending: "outline",
-  Completed: "default",
+  Paid: "default",
   Failed: "destructive",
 };
 
@@ -32,8 +29,15 @@ export default async function TechnicianPaymentsPage() {
       cache: "no-store",
     },
   );
-  const result = await res.json();
-  const payments = result.data ?? [];
+
+  let payments = [];
+
+  if (res.ok) {
+    const result = await res.json();
+    if (result.data) {
+      payments = result.data;
+    }
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -42,9 +46,11 @@ export default async function TechnicianPaymentsPage() {
         All payments made to you by customers.
       </p>
 
-      {payments.length === 0 ? (
+      {payments.length === 0 && (
         <p className="text-muted-foreground">No payments received yet.</p>
-      ) : (
+      )}
+
+      {payments.length > 0 && (
         <div className="overflow-x-auto rounded-lg border">
           <Table>
             <TableHeader>
@@ -58,28 +64,48 @@ export default async function TechnicianPaymentsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {payments.map((payment: any) => (
-                <TableRow key={payment.id}>
-                  <TableCell>{payment.user?.name}</TableCell>
-                  <TableCell>
-                    {payment.booking?.service?.service_name}
-                  </TableCell>
-                  <TableCell className="font-mono text-xs">
-                    {payment.transactionId ?? "—"}
-                  </TableCell>
-                  <TableCell>${Number(payment.amount).toFixed(2)}</TableCell>
-                  <TableCell>
-                    <Badge variant={statusVariant[payment.status] ?? "outline"}>
-                      {payment.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {payment.paidAt
-                      ? new Date(payment.paidAt).toLocaleDateString()
-                      : new Date(payment.createdAt).toLocaleDateString()}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {payments.map((payment: any) => {
+                let customerName = "—";
+                if (payment.user) {
+                  customerName = payment.user.name;
+                }
+
+                let serviceName = "—";
+                if (payment.booking && payment.booking.service) {
+                  serviceName = payment.booking.service.service_name;
+                }
+
+                let transactionId = "—";
+                if (payment.transactionId) {
+                  transactionId = payment.transactionId;
+                }
+
+                const amountText = "$" + Number(payment.amount).toFixed(2);
+
+                let dateText = "";
+                if (payment.paidAt) {
+                  dateText = new Date(payment.paidAt).toLocaleDateString();
+                } else {
+                  dateText = new Date(payment.createdAt).toLocaleDateString();
+                }
+
+                const badgeColor = statusVariant[payment.status] || "outline";
+
+                return (
+                  <TableRow key={payment.id}>
+                    <TableCell>{customerName}</TableCell>
+                    <TableCell>{serviceName}</TableCell>
+                    <TableCell className="font-mono text-xs">
+                      {transactionId}
+                    </TableCell>
+                    <TableCell>{amountText}</TableCell>
+                    <TableCell>
+                      <Badge variant={badgeColor}>{payment.status}</Badge>
+                    </TableCell>
+                    <TableCell>{dateText}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>

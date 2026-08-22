@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
@@ -40,6 +41,7 @@ export function EditServiceDialog({
     if (!state.message) return;
     if (state.success) {
       toast.success("Service updated!");
+      setOpen(false);
     } else {
       toast.error(state.message);
     }

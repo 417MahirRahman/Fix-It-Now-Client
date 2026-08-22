@@ -20,18 +20,16 @@ export const createServiceAction = async (
   };
 
   try {
-    const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/technician/services`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(payload),
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/services`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
-    return await res.json();
+      body: JSON.stringify(payload),
+    });
+    const result = await res.json();
+    return result;
   } catch {
     return {
       success: false,

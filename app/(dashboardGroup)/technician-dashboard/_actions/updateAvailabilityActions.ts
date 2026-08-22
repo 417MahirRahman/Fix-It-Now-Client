@@ -1,3 +1,5 @@
+'use server';
+
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { AvailabilityState } from "./technician.interface";
@@ -20,7 +22,7 @@ export const updateAvailabilityAction = async (
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/technician/availability/${availabilityId}`,
+      `${process.env.BACKEND_API_URL}/api/availability/${availabilityId}`,
       {
         method: "PUT",
         headers: {
@@ -31,7 +33,6 @@ export const updateAvailabilityAction = async (
       },
     );
     const result = await res.json();
-    if (result.success) revalidatePath("/technician-dashboard/services");
     return result;
   } catch {
     return {

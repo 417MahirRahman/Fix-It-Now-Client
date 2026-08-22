@@ -15,7 +15,7 @@ export const updateBookingStatusAction = async (
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/technician/bookings/${bookingId}`,
+      `${process.env.BACKEND_API_URL}/api/bookings/${bookingId}`,
       {
         method: "PATCH",
         headers: {
@@ -26,7 +26,6 @@ export const updateBookingStatusAction = async (
       },
     );
     const result = await res.json();
-    if (result.success) revalidatePath("/technician-dashboard/bookings");
     return result;
   } catch {
     return {

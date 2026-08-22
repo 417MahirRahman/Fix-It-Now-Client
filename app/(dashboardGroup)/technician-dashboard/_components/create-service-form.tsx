@@ -9,24 +9,38 @@ import { Label } from "@/components/ui/label";
 import { createServiceAction } from "../_actions/createServiceActions";
 import { ServiceState } from "../_actions/technician.interface";
 
-const initialState: ServiceState = { success: false, message: "" };
+const initialState: ServiceState = {
+  success: false,
+  message: "",
+};
 
-export function CreateServiceForm() {
+interface Category {
+  id: string;
+  category_name: string;
+}
+
+interface CreateServiceFormProps {
+  categories: Category[];
+}
+
+export function CreateServiceForm({ categories }: CreateServiceFormProps) {
   const router = useRouter();
+
   const [state, formAction, pending] = useActionState(
     createServiceAction,
     initialState,
   );
 
-  useEffect(() => {
-    if (!state.message) return;
-    if (state.success) {
-      toast.success("Service created successfully!");
-      router.push("/technician-dashboard/services");
-    } else {
-      toast.error(state.message);
-    }
-  }, [state, router]);
+ useEffect(() => {
+   if (!state.message) return;
+
+   if (state.success) {
+     toast.success(state.message || "Service created successfully!");
+     router.push("/technician-dashboard/createNewService");
+   } else {
+     toast.error(state.message);
+   }
+ }, [state, router]);
 
   return (
     <form action={formAction} className="space-y-4">
@@ -35,13 +49,13 @@ export function CreateServiceForm() {
         <Input
           id="service_name"
           name="service_name"
-          placeholder="e.g. Pipe Leak Repair"
+          placeholder="Pipe Leak Repair"
           required
-          className="h-11"
         />
       </div>
+
       <div className="space-y-2">
-        <Label htmlFor="price">Price ($)</Label>
+        <Label htmlFor="price">Price</Label>
         <Input
           id="price"
           name="price"
@@ -49,19 +63,26 @@ export function CreateServiceForm() {
           step="0.01"
           min={0}
           required
-          className="h-11"
         />
       </div>
+
       <div className="space-y-2">
         <Label htmlFor="categoryName">Category</Label>
-        <Input
+        <select
           id="categoryName"
           name="categoryName"
-          placeholder="e.g. Plumbing"
           required
-          className="h-11"
-        />
+          className="flex h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+        >
+          <option value="">Select Category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.category_name}>
+              {category.category_name}
+            </option>
+          ))}
+        </select>
       </div>
+
       <Button type="submit" className="w-full h-11" disabled={pending}>
         {pending ? "Creating..." : "Create Service"}
       </Button>

@@ -61,5 +61,5 @@ export function BookingStatusActions({
     );
   }
 
-  return null; // Accepted (waiting for payment), Paid, Completed, Declined, Cancelled — no technician action available
+  return null;
 }

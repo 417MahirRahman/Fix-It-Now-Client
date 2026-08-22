@@ -12,8 +12,13 @@ export default async function MyServicesPage() {
     headers: { Authorization: `Bearer ${accessToken}` },
     cache: "no-store",
   });
-  const result = await res.json();
-  const profile = result.data?.profile;
+
+  let profile: any = null;
+  if (res.ok) {
+    const result = await res.json();
+    profile = result.data?.profile;
+  }
+
   const services = profile?.technicianProfile?.services ?? [];
   const availability = profile?.technicianProfile?.availability ?? [];
 
@@ -34,7 +39,6 @@ export default async function MyServicesPage() {
               id={service.id}
               service_name={service.service_name}
               price={service.price}
-              rating={service.rating}
               categoryName={service.category?.category_name}
               availability={availability}
             />

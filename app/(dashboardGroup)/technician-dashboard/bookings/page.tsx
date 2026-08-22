@@ -15,8 +15,12 @@ export default async function TechnicianBookingsPage() {
       cache: "no-store",
     },
   );
-  const result = await res.json();
-  const bookings = result.data ?? [];
+
+  let bookings: any[] = [];
+  if (res.ok) {
+    const result = await res.json();
+    bookings = result.data ?? [];
+  }
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">

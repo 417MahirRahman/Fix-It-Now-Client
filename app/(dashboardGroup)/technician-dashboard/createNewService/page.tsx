@@ -3,7 +3,17 @@ import { Separator } from "@/components/ui/separator";
 import { CreateServiceForm } from "../_components/create-service-form";
 import { SetAvailabilityButton } from "../_components/set-availability-button";
 
-export default function CreateNewServicePage() {
+interface Category {
+  id: string;
+  category_name: string;
+}
+
+export default async function CreateNewServicePage() {
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/services/categories`, {
+    cache: "no-store",
+  });
+  const result = await res.json();
+  const categories: Category[] = result.data ?? [];
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-8">
       <Card className="w-full sm:max-w-lg p-4 sm:p-6 md:p-8 shadow-lg">
@@ -16,7 +26,7 @@ export default function CreateNewServicePage() {
           </p>
         </CardHeader>
         <CardContent className="p-0 space-y-6">
-          <CreateServiceForm />
+          <CreateServiceForm categories={categories} />
           <Separator />
           <SetAvailabilityButton />
         </CardContent>
