@@ -36,7 +36,7 @@ export async function CategoriesSection() {
             </p>
 
             <Link
-              href="/categories"
+              href="/allCategories"
               className="group inline-flex items-center gap-2 text-sm font-semibold border-b border-foreground pb-1 hover:text-primary hover:border-primary transition-colors"
             >
               View all categories

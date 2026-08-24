@@ -49,7 +49,7 @@ export async function ServicesSection() {
             size="lg"
             className="gap-2 h-12 px-8 text-base font-medium"
           >
-            <Link href="/services">
+            <Link href="/allServices">
               <Wrench className="size-5" />
               View All Services
               <ArrowRight className="size-4" />

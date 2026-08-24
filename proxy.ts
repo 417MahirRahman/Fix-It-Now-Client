@@ -1,5 +1,4 @@
 import { JwtPayload } from "jsonwebtoken";
-import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getNewAccessToken } from "./service/getNewAccessToken";
@@ -18,7 +17,6 @@ const PUBLIC_ROUTES = [
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const cookieStore = await cookies();
 
   let accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
@@ -34,14 +32,15 @@ export async function proxy(request: NextRequest) {
       )
     : null;
 
-  if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
+  const response = NextResponse.next();
 
+  if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
     const result = await getNewAccessToken();
 
     if (result.success) {
       const newAccessToken = result.data.accessToken;
 
-      cookieStore.set("accessToken", newAccessToken, {
+      response.cookies.set("accessToken", newAccessToken, {
         httpOnly: true,
         maxAge: 60 * 60 * 24,
         sameSite: "lax",
@@ -58,7 +57,7 @@ export async function proxy(request: NextRequest) {
   let userRole = null;
 
   if (!decodedAccessToken?.success) {
-    cookieStore.delete("accessToken");
+    response.cookies.delete("accessToken");
   }
 
   if (decodedAccessToken?.success && decodedAccessToken.data) {
@@ -100,11 +99,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/not-found", request.url));
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)",
-  ],
+  matcher: ["/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)"],
 };
