@@ -87,7 +87,7 @@ export default async function TechnicianDashboardPage() {
           </p>
         </div>
         <Button asChild>
-          <Link href="/technician-dashboard/services/new">
+          <Link href="/technician-dashboard/createNewService">
             <Plus className="size-4" /> New Service
           </Link>
         </Button>
@@ -160,7 +160,7 @@ export default async function TechnicianDashboardPage() {
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">My Services</h2>
           <Button asChild variant="ghost" size="sm">
-            <Link href="/technician-dashboard/services">View all</Link>
+            <Link href="/technician-dashboard/myServices">View all</Link>
           </Button>
         </div>
 
