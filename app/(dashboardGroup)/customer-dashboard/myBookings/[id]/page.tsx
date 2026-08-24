@@ -87,20 +87,27 @@ export default async function BookingDetailPage({ params }: PageProps) {
           {booking.payment && (
             <>
               <Separator />
+
               <div>
                 <p className="text-sm text-muted-foreground">Payment Status</p>
+
                 <Badge
                   variant={
-                    booking.payment.status === "Completed"
-                      ? "default"
-                      : "outline"
+                    booking.payment.status === "Paid" ? "default" : "outline"
                   }
                 >
                   {booking.payment.status}
                 </Badge>
-                {booking.status === "Completed" && !booking.review && (
-                  <ReviewButton bookingId={booking.id} />
-                )}
+              </div>
+            </>
+          )}
+
+          {booking.status === "Completed" && !booking.review && (
+            <>
+              <Separator />
+
+              <div>
+                <ReviewButton bookingId={booking.id} />
               </div>
             </>
           )}

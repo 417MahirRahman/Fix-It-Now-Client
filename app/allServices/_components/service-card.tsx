@@ -1,9 +1,7 @@
-import { Wrench, ArrowRight } from "lucide-react";
+import { Wrench } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 
 interface ServiceCardProps {
   service_name: string;
@@ -18,7 +16,6 @@ export function ServiceCard({
   price,
   categoryName,
   technicianName,
-  technicianId,
 }: ServiceCardProps) {
   return (
     <Card className="group relative h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-border/50">
@@ -69,20 +66,6 @@ export function ServiceCard({
             </span>
           </div>
         </div>
-
-        <Button
-          asChild
-          size="sm"
-          className="w-full mt-auto h-9 text-xs font-medium transition-all group-hover:shadow-sm"
-        >
-          <Link
-            href={`/allTechnicians/${technicianId}`}
-            className="flex items-center justify-center gap-1.5"
-          >
-            View Details
-            <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </Button>
       </CardContent>
 
       {/* Ring overlay for depth */}

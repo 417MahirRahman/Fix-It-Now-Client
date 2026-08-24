@@ -34,23 +34,78 @@ export function BookingCard({
   status,
   accessToken,
 }: BookingCardProps) {
-  const handlePayment = () => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/payments/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ bookingId: id }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        const checkoutUrl = result?.data?.checkoutUrl;
-        window.location.href = checkoutUrl;
-      })
-      .catch((error) => {
-        console.error("Payment failed:", error);
+  const handlePayment = async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/payments/create`;
+
+      console.log("Payment URL:", url);
+      console.log("Access Token:", accessToken);
+      console.log("Booking ID:", id);
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          bookingId: id,
+        }),
       });
+
+      const result = await response.json();
+
+      console.log("Payment status:", response.status);
+      console.log("Payment response:", result);
+
+      if (!response.ok) {
+        throw new Error(
+          result?.error ||
+            result?.message ||
+            "Failed to create payment session",
+        );
+      }
+
+      const checkoutUrl = result?.data?.checkoutUrl;
+
+      if (!checkoutUrl) {
+        throw new Error("Stripe checkout URL is missing");
+      }
+
+      console.log("Stripe checkout URL:", checkoutUrl);
+
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Payment failed:", error);
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/bookings/${id}/cancel`;
+
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const result = await response.json();
+
+      console.log("Cancel status:", response.status);
+      console.log("Cancel response:", result);
+
+      if (!response.ok) {
+        throw new Error(
+          result?.error || result?.message || "Failed to cancel booking",
+        );
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error("Cancel booking failed:", error);
+    }
   };
 
   return (
@@ -73,7 +128,11 @@ export function BookingCard({
         </div>
 
         <div className="flex gap-2">
-          {status === "Requested" ? null : status === "Completed" ? (
+          {status === "Declined" || status === "Cancelled" ? null : status === "Requested" ? (
+            <Button variant="outline" size="sm" onClick={handleCancel}>
+              Cancel
+            </Button>
+          ) : status === "Completed" || status === "InProgress" ? (
             <Button variant="outline" size="sm" disabled>
               Paid
             </Button>

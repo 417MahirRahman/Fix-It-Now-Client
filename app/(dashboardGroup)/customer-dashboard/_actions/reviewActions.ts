@@ -12,21 +12,43 @@ export const createReviewAction = async (
   const accessToken = cookieStore.get("accessToken")?.value;
 
   if (!accessToken) {
-    return { success: false, message: "Please log in to leave a review." };
+    return {
+      success: false,
+      message: "Please log in to leave a review.",
+    };
   }
 
-  const bookingId = formData.get("bookingId");
-  const rating = formData.get("rating");
-  const review = formData.get("review");
+  const bookingId = formData.get("bookingId")?.toString();
+  const ratingValue = formData.get("rating")?.toString();
+  const reviewValue = formData.get("review")?.toString();
 
-  if (!rating) {
-    return { success: false, message: "Please select a star rating." };
+  if (!bookingId) {
+    return {
+      success: false,
+      message: "Booking ID is required.",
+    };
+  }
+
+  if (!ratingValue) {
+    return {
+      success: false,
+      message: "Please select a star rating.",
+    };
+  }
+
+  const rating = Number(ratingValue);
+
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+    return {
+      success: false,
+      message: "Rating must be between 1 and 5.",
+    };
   }
 
   const payload = {
     bookingId,
-    rating: Number(rating),
-    review: review || undefined,
+    rating,
+    review: reviewValue?.trim() || undefined,
   };
 
   try {
@@ -41,15 +63,27 @@ export const createReviewAction = async (
 
     const result = await res.json();
 
-    if (result.success) {
-      revalidatePath(`/dashboard/bookings/${bookingId}`);
+    if (!res.ok || !result.success) {
+      return {
+        success: false,
+        message: result?.message || "Failed to submit review.",
+      };
     }
 
-    return result;
+    revalidatePath(`/customer-dashboard/myBookings/${bookingId}`);
+
+    revalidatePath("/customer-dashboard/myBookings");
+
+    return {
+      success: true,
+      message: "Review submitted successfully.",
+    };
   } catch (error) {
+    console.error("Review submission failed:", error);
+
     return {
       success: false,
-      message: `Something went wrong. Please try again. ${error}`,
+      message: "Something went wrong. Please try again.",
     };
   }
 };

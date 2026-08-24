@@ -95,7 +95,7 @@ export default async function CustomerDashboardPage() {
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Recent Bookings</h2>
           <Button asChild variant="ghost" size="sm">
-            <Link href="/customer-dashboard/bookings">View all</Link>
+            <Link href="/customer-dashboard/myBookings">View all</Link>
           </Button>
         </div>
 
@@ -136,7 +136,7 @@ export default async function CustomerDashboardPage() {
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Recent Transactions</h2>
           <Button asChild variant="ghost" size="sm">
-            <Link href="/customer-dashboard/payments">View all</Link>
+            <Link href="/customer-dashboard/paymentHistory">View all</Link>
           </Button>
         </div>
 
