@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { BookingCard } from "../_components/booking-card";
@@ -27,16 +26,25 @@ export default async function MyBookingsPage() {
         <p className="text-muted-foreground">No bookings yet.</p>
       ) : (
         <div className="space-y-3">
-          {bookings.map((booking: any) => (
-            <BookingCard
-              key={booking.id}
-              id={booking.id}
-              serviceName={booking.service?.service_name}
-              technicianName={booking.technician?.name}
-              scheduledTime={booking.scheduledTime}
-              status={booking.status}
-            />
-          ))}
+          {bookings.map(
+            (booking: {
+              id: string;
+              service?: { service_name: string };
+              technician?: { name: string };
+              scheduledTime: string;
+              status: string;
+            }) => (
+              <BookingCard
+                key={booking.id}
+                id={booking.id}
+                serviceName={booking.service?.service_name ?? ""}
+                technicianName={booking.technician?.name ?? ""}
+                scheduledTime={booking.scheduledTime}
+                status={booking.status}
+                accessToken={accessToken}
+              />
+            ),
+          )}
         </div>
       )}
     </div>

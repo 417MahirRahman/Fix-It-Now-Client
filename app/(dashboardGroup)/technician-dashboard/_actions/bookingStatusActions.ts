@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { BookingStatusState } from "./technician.interface";
+import { revalidatePath } from "next/cache";
 
 export const updateBookingStatusAction = async (
   bookingId: string,
@@ -14,7 +15,7 @@ export const updateBookingStatusAction = async (
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/bookings/${bookingId}`,
+      `${process.env.BACKEND_API_URL}/api/technician/bookings/${bookingId}`,
       {
         method: "PATCH",
         headers: {
@@ -25,6 +26,7 @@ export const updateBookingStatusAction = async (
       },
     );
     const result = await res.json();
+    if (result.success) revalidatePath("/technician-dashboard/bookings");
     return result;
   } catch {
     return {
