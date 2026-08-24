@@ -263,34 +263,4 @@ This keeps the frontend README focused on installation, usage, features, and dev
 
 ---
 
-## 🤝 Contributing
-
-If you want to contribute:
-
-1. Fork the repository.
-2. Create a new branch.
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
-3. Make your changes.
-4. Test the application locally.
-5. Commit your changes.
-
-```bash
-git add .
-git commit -m "Add your feature"
-```
-
-6. Push the branch.
-
-```bash
-git push origin feature/your-feature-name
-```
-
-7. Open a Pull Request.
-
----
-
 **FixItNow — Connecting customers with trusted technicians.**
